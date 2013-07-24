@@ -3,7 +3,7 @@
 
 	<div data-role="content">
 		<h2>Weekend aan zee</h2>
-		<a href="#" data-role="button" data-icon="gear" data-iconpos="notext">Instellingen</a>
+		<a href="instellingen.php" data-role="button" data-icon="gear" data-iconpos="notext">Instellingen</a>
 		<a href="#" data-role="button" data-icon="plus" data-theme="b">Voeg uitgave toe</a>
 	
 		<br />
