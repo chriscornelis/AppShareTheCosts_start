@@ -43,11 +43,10 @@ class User
 	
 	public function Save()
 	{
-		include("connection.php");
+		include("Connection.php");
 		if(!$link->connect_error)
 		{
-			if($link->select_db($m_sDatabase))
-			{
+			
 				$sSql = "INSERT INTO Gebruiker (Naam, Paswoord, Email) 
 				VALUES ('".$link->real_escape_string($this->Name)."',
 				'".$link->real_escape_string($this->Pass)."',
@@ -62,11 +61,6 @@ class User
 				{
 					throw new Exception('whoops, probleem bij het opslaan');
 				}
-			}
-			else
-			{
-				throw new Exception('Db kon niet geselecteerd worden');
-			}
 		}
 		else
 		{
@@ -79,7 +73,7 @@ class User
 	
 	public function UsernameAvailable()
 	{
-		include("connection.php");
+		include("Connection.php");
 		
 		$sSql = "SELECT Naam FROM Gebruikers WHERE Naam = '".$this->Name."'";
 		$v_Result = $link->query($sSql);

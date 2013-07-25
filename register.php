@@ -1,13 +1,18 @@
 <?php
 	include_once('classes/User.class.php');
-	
-	if(!empty($_POST['name']))
+	$test = 'test';
+	echo $test;
+	if(!empty($_POST['name']) && !empty($_POST['mail']) && !empty($_POST['password']))
 	{
-		echo 'tot hier lukt het';
+	//isset(($_POST['register'])
+		
 		try
 		{
 			$user = new User();
 			$user->Name = $_POST['name'];
+			$user->Email = $_POST['mail'];
+			$user->Pass = $_POST['password'];
+			
 			if($user->UsernameAvailable())
 			{
 				$user->Save();
@@ -50,12 +55,12 @@
 $(document).ready(function(){
 	$("#name_register").keyup(function(){
 		var username = $("#name_register").val();
-		//console.log(username);
+		console.log(username);
 		
 		$.ajax({
 			type: "POST",
 			url: "ajax/check_username.php",
-			data: { username: username}
+			data: { username: username }
 		}).done(function( msg ) {
 			if(msg.status == 'succes')
 			{
@@ -86,7 +91,7 @@ $(document).ready(function(){
 			<input type="email" name="mail" id="mail_register" placeholder="e-mail" value="">
 			<input type="password" name="password" id="password_register" placeholder="paswoord" value="" autocomplete="off">
 			
-			<a href="#" data-role="button" type="submit" class="submit" id="register">Registreren</a>
+			<input type="submit" name="register" id="register" value="Registreren">
 		</form>
 	<?php if(isset($feedback)):?>
 	<div class="feedback">
