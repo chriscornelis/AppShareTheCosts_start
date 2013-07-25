@@ -6,7 +6,7 @@
 			$oUser = new User();
 			$oUser->Name = $_POST['name_register'];
 			if($oUser->UsernameAvailable())
-			{
+			{	
 				$feedback['status']='succes';
 				$feedback['available']='yes';
 				$feedback['message']='Gebruikersnaam is beschikbaar!';
@@ -16,6 +16,7 @@
 				$feedback['status']='succes';
 				$feedback['available']='no';
 				$feedback['message']='Sorry, gebruikersnaam bestaat al';
+				
 			}
 		
 		}

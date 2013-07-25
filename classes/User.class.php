@@ -6,7 +6,7 @@ class User
 	private $m_sEmail;
 	private $m_sPass;
 
-	public function __set($p_sProperty, $p_vValue)
+	public function _set($p_sProperty, $p_vValue)
 	{
 		switch($p_sProperty)
 		{
@@ -23,7 +23,7 @@ class User
 		}
 	}
 	
-	public function __get($p_sProperty)
+	public function _get($p_sProperty)
 	{
 		$vResult = null;
 		switch($p_sProperty)
@@ -49,7 +49,7 @@ class User
 			
 				$sSql = "INSERT INTO Gebruiker (Naam, Paswoord, Email) 
 				VALUES ('".$link->real_escape_string($this->Name)."',
-				'".$link->real_escape_string($this->Pass)."',
+				'".$link->md5(real_escape_string($this->Pass))."',
 				'".$link->real_escape_string($this->Email)."'
 				);";
 				
@@ -75,10 +75,11 @@ class User
 	{
 		include("Connection.php");
 		
-		$sSql = "SELECT Naam FROM Gebruikers WHERE Naam = '".$this->Name."'";
+		$sSql = "SELECT Naam FROM Gebruiker WHERE Naam = '".$this->Name."'";
 		$v_Result = $link->query($sSql);
 		if($vResult->num_rows>0)
 		{
+			//gebruikersnaam bestaat al
 			return(false);
 			
 		}
