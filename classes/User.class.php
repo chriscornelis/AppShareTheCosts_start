@@ -74,7 +74,26 @@ class User
 			throw new Exception('no connection with db');
 		}
 		return $bResult;
+		mysqli_close($link);
 	}
+	
+	public function UsernameAvailable()
+	{
+		include("connection.php");
+		
+		$sSql = "SELECT Naam FROM Gebruikers WHERE Naam = '".$this->Name."'";
+		$v_Result = $link->query($sSql);
+		if($vResult->num_rows>0)
+		{
+			return(false);
+			
+		}
+		else
+		{
+			return(true);
+		}
+		mysqli_close($link);
 
+	}
 }
 ?>

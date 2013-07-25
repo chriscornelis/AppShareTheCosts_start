@@ -1,5 +1,28 @@
 <?php
-
+	include_once('classes/User.class.php');
+	
+	if(!empty($_POST['name']))
+	{
+		echo 'tot hier lukt het';
+		try
+		{
+			$user = new User();
+			$user->Name = $_POST['name'];
+			if($user->UsernameAvailable())
+			{
+				$user->Save();
+				$feedback = "Top, je hebt een account nu!";
+			}
+			else
+			{
+				$feedback = "Sorry, deze gebruikersnaam bestaat al";
+			}
+		}
+		catch(Exception $e)
+		{
+			$feedback = $e->getMessage();
+		}
+	}
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -23,7 +46,33 @@
 		
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#name_register").keyup(function(){
+		var username = $("#name_register").val();
+		//console.log(username);
 		
+		$.ajax({
+			type: "POST",
+			url: "ajax/check_username.php",
+			data: { username: username}
+		}).done(function( msg ) {
+			if(msg.status == 'succes')
+			{
+				if(msg.available == 'yes')
+				{
+					$(".username_feedback span").text(msg.message);
+					
+				}
+				else
+				{
+					$(".username_feedback span").text(msg.message);
+				}
+			}
+		});
+	});
+});
+</script>
 	</head>
 
 	<body>
@@ -32,12 +81,22 @@
 
 	<div data-role="content">
 		<h2>Registreer</h2>
-		
-		<input type="text" name="name" id="name_register" placeholder="gebruikersnaam" value="">
-		<input type="email" name="mail" id="mail_register" placeholder="e-mail" value="">
-		<input type="password" name="password" id="password_register" placeholder="paswoord" value="" autocomplete="off">
-		
-		<a href="#" data-role="button" id="register">Registreren</a>
+		<form action="" method="post">
+			<input type="text" name="name" id="name_register" placeholder="gebruikersnaam" value="">
+			<input type="email" name="mail" id="mail_register" placeholder="e-mail" value="">
+			<input type="password" name="password" id="password_register" placeholder="paswoord" value="" autocomplete="off">
+			
+			<a href="#" data-role="button" type="submit" class="submit" id="register">Registreren</a>
+		</form>
+	<?php if(isset($feedback)):?>
+	<div class="feedback">
+	
+	<?php echo $feedback;?>
+	</div>
+	<?php endif; ?>
+<div class="username_feedback"><span>checking...</span></div>
+
+
 	</div><!--content-->
 	
 		</div>
