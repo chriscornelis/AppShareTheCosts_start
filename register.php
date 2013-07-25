@@ -1,6 +1,6 @@
 <?php
 	include_once('classes/User.class.php');
-	$feedback = "";
+	//$feedback = "";
 	if(isset($_POST['register']))
 	{
 		if(!empty($_POST['name_register']) && !empty($_POST['mail_register']) && !empty($_POST['password_register']))
@@ -61,13 +61,13 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#name_register").keyup(function(){
-		var username = $("#name_register").val();
+		var Name = $("#name_register").val();
 		//console.log(username);
 		
 		$.ajax({
 			type: "POST",
 			url: "ajax/check_username.php",
-			data: { username: username }
+			data: { Name: Name }
 		}).done(function( msg ) {
 			if(msg.status == 'succes')
 			{
@@ -94,11 +94,11 @@ $(document).ready(function(){
 	<div data-role="content">
 		<h2>Registreer</h2>
 		<form action="" method="post">
-			<input type="text" name="name_register" id="name_register" placeholder="gebruikersnaam" >
-			<input type="email" name="mail_register" id="mail_register" placeholder="e-mail" >
-			<input type="password" name="password_register" id="password_register" placeholder="paswoord" autocomplete="off">
+			<input type="text" name="name_register" id="name_register" placeholder="gebruikersnaam" />
+			<input type="email" name="mail_register" id="mail_register" placeholder="e-mail" />
+			<input type="password" name="password_register" id="password_register" placeholder="paswoord" autocomplete="off" />
 			
-			<input type="submit" name="register" id="register" value="Registreren">
+			<input type="submit" name="register" id="register" value="Registreren" />
 		</form>
 	<?php if(isset($feedback)):?>
 	<div class="feedback">
