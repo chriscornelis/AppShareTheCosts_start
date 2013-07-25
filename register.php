@@ -1,31 +1,38 @@
 <?php
 	include_once('classes/User.class.php');
-	$test = 'test';
-	echo $test;
-	if(!empty($_POST['name']) && !empty($_POST['mail']) && !empty($_POST['password']))
+	$feedback = "";
+	if(isset($_POST['register']))
 	{
-	//isset(($_POST['register'])
-		
-		try
+		if(!empty($_POST['name_register']) && !empty($_POST['mail_register']) && !empty($_POST['password_register']))
 		{
-			$user = new User();
-			$user->Name = $_POST['name'];
-			$user->Email = $_POST['mail'];
-			$user->Pass = $_POST['password'];
 			
-			if($user->UsernameAvailable())
+			try
 			{
-				$user->Save();
-				$feedback = "Top, je hebt een account nu!";
+				$user = new User();
+				$user->Name = $_POST['name_register'];
+				$user->Email = $_POST['mail_register'];
+				$user->Pass = $_POST['password_register'];
+				
+				
+				
+				if($user->UsernameAvailable())
+				{
+					$user->Save();
+					$feedback = "Top, je hebt een account nu!";
+				}
+				else
+				{
+					$feedback = "Sorry, deze gebruikersnaam bestaat al";
+				}
 			}
-			else
+			catch(Exception $e)
 			{
-				$feedback = "Sorry, deze gebruikersnaam bestaat al";
+				$feedback = $e->getMessage();
 			}
 		}
-		catch(Exception $e)
+		else
 		{
-			$feedback = $e->getMessage();
+			$feedback = "Vergeet niet alle velden in te vullen";
 		}
 	}
 ?><!DOCTYPE html>
@@ -55,7 +62,7 @@
 $(document).ready(function(){
 	$("#name_register").keyup(function(){
 		var username = $("#name_register").val();
-		console.log(username);
+		//console.log(username);
 		
 		$.ajax({
 			type: "POST",
@@ -87,19 +94,20 @@ $(document).ready(function(){
 	<div data-role="content">
 		<h2>Registreer</h2>
 		<form action="" method="post">
-			<input type="text" name="name" id="name_register" placeholder="gebruikersnaam" value="">
-			<input type="email" name="mail" id="mail_register" placeholder="e-mail" value="">
-			<input type="password" name="password" id="password_register" placeholder="paswoord" value="" autocomplete="off">
+			<input type="text" name="name_register" id="name_register" placeholder="gebruikersnaam" >
+			<input type="email" name="mail_register" id="mail_register" placeholder="e-mail" >
+			<input type="password" name="password_register" id="password_register" placeholder="paswoord" autocomplete="off">
 			
 			<input type="submit" name="register" id="register" value="Registreren">
 		</form>
 	<?php if(isset($feedback)):?>
 	<div class="feedback">
 	
-	<?php echo $feedback;?>
+	<?php echo $feedback; ?>
 	</div>
 	<?php endif; ?>
-<div class="username_feedback"><span>checking...</span></div>
+	
+<div class="username_feedback"><span></span></div>
 
 
 	</div><!--content-->

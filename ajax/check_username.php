@@ -4,7 +4,7 @@
 		try
 		{
 			$oUser = new User();
-			$oUser->Name = $_POST['name'];
+			$oUser->Name = $_POST['name_register'];
 			if($oUser->UsernameAvailable())
 			{
 				$feedback['status']='succes';
