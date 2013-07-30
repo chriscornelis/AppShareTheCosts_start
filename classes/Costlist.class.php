@@ -37,7 +37,6 @@ class Costlist
 
 		}
 	}
-	
 	public function _get($p_sProperty)
 	{
 		$lResult = null;
@@ -67,8 +66,9 @@ class Costlist
 		}
 		return $lResult;
 	}
-	public function SaveList()
+	public function Savelist()
 	{
+		
 		include("Connection.php");
 		$sSql = "INSERT INTO Uitgavenlijst (LijstNaam, GebruikerID, Wachtwoord, AantalDeelnemers, KostKm, VerbruikAuto) 
 		VALUES ('".$link->real_escape_string($this->ListName)."',
@@ -79,18 +79,20 @@ class Costlist
 		'".$link->real_escape_string($this->FuelConsump)."'
 		);";
 		
-		if(!$link->query($sSql))
-		{
-			//lijst kan niet opgeslagen worden
-			throw new Exception("Lijst kan niet opgeslagen worden")
-		}
-		else
+		
+		if($link->query($sSql))
 		{
 			//lijst opgeslagen, id van nieuwe lijst ophalen
 			$id = $link->insert_id;
 			throw new Exception("Alright! Jouw nieuwe lijst is opgeslagen!");
 		}
+		else
+		{
+			//lijst kan niet opgeslagen worden
+			throw new Exception("Lijst kan niet opgeslagen worden");
+		}
 		mysqli_close($link);
 	}
+
 }
 ?>
