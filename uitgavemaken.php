@@ -29,7 +29,7 @@
 				<input type="number" name="start_km" id="start_km" value="">
 							
 				
-				<label for="eind_km">Eind km</label>
+				<label for="end_km">Eind km</label>
 				<input type="number" name="end_km" id="end_km" value="">
 			</div>
 			
