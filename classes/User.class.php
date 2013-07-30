@@ -2,6 +2,7 @@
 
 class User
 {
+	private $m_sUserID;
 	private $m_sName;
 	private $m_sEmail;
 	private $m_sPass;
@@ -10,6 +11,9 @@ class User
 	{
 		switch($p_sProperty)
 		{
+			case "UserID":
+				$this->m_sUserID = $p_vValue;
+				break;
 			case "Name":
 				$this->m_sName = $p_vValue;
 				break;
@@ -28,6 +32,8 @@ class User
 		$vResult = null;
 		switch($p_sProperty)
 		{
+			case "UserID":
+				$v_Result = $this->m_sUserID;
 			case "Name":
 				$v_Result = $this->m_sName;
 				break;
